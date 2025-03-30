@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
+    before_action :authenticate_user!, except: [:create]
 
     def index
         @users = User.all
+        render json: @users
     end
 
     def show
@@ -31,7 +33,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.fetch(:user, {})
+      params.fetch(:user, {:name, :email})
     end
 
 end
